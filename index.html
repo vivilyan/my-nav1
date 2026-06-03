@@ -2,44 +2,366 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的网址导航</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>星辰收藏家 </title>
     <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: "Microsoft YaHei", sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            background: #f4f7fc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 2rem 1rem;
+            color: #1f2d3d;
+        }
+
         .container {
-            max-width: 1000px;
+            max-width: 1300px;
             margin: 0 auto;
         }
-        .card {
-            display: inline-block;
-            background: white;
-            padding: 15px 20px;
-            margin: 10px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
         }
-        .card:hover {
-            background: #e8f0fe;
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0b5e7e, #1e88e5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            color: #4a627a;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* 两栏核心布局 */
+        .two-columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        /* 左侧: 常用搜索工具 */
+        .left-panel {
+            flex: 1.2;
+            min-width: 260px;
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        /* 右侧: AI热门工具 */
+        .right-panel {
+            flex: 2.5;
+            min-width: 280px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            border-left: 5px solid #1e88e5;
+            padding-left: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            font-size: 1.3rem;
+        }
+
+        /* 搜索工具分组 (模拟常用 + 站内) */
+        .tool-group {
+            margin-bottom: 2rem;
+        }
+
+        .group-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: #0b5e7e;
+            border-bottom: 2px solid #e2edf2;
+            padding-bottom: 0.4rem;
+        }
+
+        .link-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-card {
+            background: #f8fafc;
+            padding: 8px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #1f3b4c;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border: 1px solid #e2edf2;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tool-card:hover {
+            background: #e1f0fa;
+            border-color: #1e88e5;
+            transform: translateY(-2px);
+            color: #0a5d7e;
+        }
+
+        /* 添加自定义按钮 */
+        .add-custom {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #cbdde6;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-add {
+            background: white;
+            border: 1px solid #1e88e5;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: #1e88e5;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-add:hover {
+            background: #1e88e5;
+            color: white;
+        }
+
+        /* AI 工具卡片区域 */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .ai-item {
+            background: white;
+            border-radius: 20px;
+            padding: 1rem;
+            transition: all 0.2s;
+            border: 1px solid #eef3f8;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            text-decoration: none;
+            display: block;
+        }
+
+        .ai-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -12px rgba(0,0,0,0.15);
+            border-color: #cde9f5;
+        }
+
+        .ai-name {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: #0b5e7e;
+        }
+
+        .ai-desc {
+            font-size: 0.75rem;
+            color: #6c8eae;
+            line-height: 1.4;
+        }
+
+        .badge {
+            background: #eef2ff;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: #1e66a5;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #7c9ab3;
+            border-top: 1px solid #dce7ef;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 780px) {
+            body { padding: 1rem; }
+            .section-title { font-size: 1.3rem; }
+        }
+
+        /* 模拟空数据提示 */
+        .empty-tip {
+            background: #fefce8;
+            padding: 0.8rem;
+            border-radius: 24px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #b45309;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>我的网址导航</h1>
-        <a href="https://www.baidu.com" class="card">百度</a>
-        <a href="https://chat.deepseek.com/sign_in" class="card">deepseek</a>
-        <a href="https://github.com" class="card">GitHub</a>
-        <a href="http://qstb.mzj.shenyang.gov.cn/" class="card">基层治理</a>
-        <a href="https://eightdefine.shengshitong.com/#/login" class="card">12345网格管理平台</a>
-        <a href="https://www.uupoop.com" class="card">在线PS</a>
-        <a href="https://818ps.com/home/mydesign" class="card">图怪兽</a>
-        <a href="https://zwfw.shenyang.gov.cn/syzwdt/epointzwmhwz/pages/default/index" class="card">沈阳政务服务网</a>
+<div class="container">
+    <div class="header">
+        <div class="logo">⭐星辰收藏家⭐</div>
+        <div class="tagline">⭐我的互联网藏宝图</div>
     </div>
+
+    <div class="two-columns">
+        <!-- 左侧：常用搜索/社区/生活/站内 -->
+        <div class="left-panel">
+            <div class="section-title">
+                <span>🔍</span> 生活绿洲
+            </div>
+
+            <div class="tool-group">
+                <div class="group-name">📌 常用</div>
+                <div class="link-grid">
+                    <a href="https://www.baidu.com" target="_blank" class="tool-card">百度</a>
+                    <a href="https://www.doubao.com/chat/?channel=RDKwf" target="_blank" class="tool-card">豆包</a>
+                    <a href="https://chat.deepseek.com/" target="_blank" class="tool-card">deepseek</a>
+
+                    <a href="https://cloud.huawei.com/#/home" target="_blank" class="tool-card">华为云空间</a>
+                    <a href="https://818ps.com" target="_blank" class="tool-card">图怪兽</a>
+                    <a href="https://www.github.com" target="_blank" class="tool-card">GitHub</a>
+                    <a href="https://www.uupoop.com/#/" target="_blank" class="tool-card">在线PS</a>
+                </div>
+            </div>
+
+            <div class="tool-group">
+                <div class="group-name">🌐 站内 / 社区</div>
+                <div class="link-grid">
+                    <a href="https://www.xiaohongshu.com/explore" class="tool-card">小红书</a>
+                    <a href="https://www.douyin.com/jingxuan" class="tool-card">抖音</a>
+                    <a href="https://weibo.com" class="tool-card">微博</a>
+                    
+                </div>
+            </div>
+
+            <div class="tool-group">
+                <div class="group-name">💼 学习</div>
+                <div class="link-grid">
+                    <a href="https://www.lnrsks.com/html/baomingchaxundayin/wangshangbaoming/" class="tool-card">辽人事考试网</a>
+                    <a href="https://zg.cpta.com.cn/examfront/login/initLogin.htm" class="tool-card">全国专业技术人员资格考试报名服务平台</a>
+                   
+                </div>
+            </div>
+
+            <!-- 模仿 "没有数据！等待你的参与哦 ^_^" 的区块 -->
+            <div class="empty-tip" style="margin: 12px 0;">
+                📭 没有数据！等待你的参与哦 ^_^
+            </div>
+
+            <!-- 添加自定义网址按钮 (前端模拟行为) -->
+            <div class="add-custom">
+                <button class="btn-add" id="addCustomBtn">+ 添加自定义网址</button>
+            </div>
+            <div id="customLinksArea" class="link-grid" style="margin-top: 1rem;"></div>
+        </div>
+
+        <!-- 右侧：AI热门工具 -->
+        <div class="right-panel">
+            <div class="section-title">
+                <span>✨</span> 工作利器
+                <span style="font-size: 0.7rem; background: #eef2fa; padding: 2px 8px; border-radius: 30px;">网址·工具</span>
+            </div>
+            <div class="ai-grid" id="aiGrid">
+                <!-- 示例AI工具数据 — 可自行增删修改 -->
+                <a href="http://qstb.mzj.shenyang.gov.cn/#/login" class="ai-item">
+                    <div class="ai-name">全市通办</div>
+                    <div class="ai-desc">民政装户图</div>
+                    <span class="badge">热门</span>
+                </a>
+                <a href="https://zwfw.shenyang.gov.cn/syzwdt/epointzwmhwz/pages/default/index" class="ai-item">
+                    <div class="ai-name">沈阳政务服务网</div>
+                    <div class="ai-desc">保险/公积金/工商/税务</div>
+                    <span class="badge">不常用</span>
+                </a>
+                <a href="https://www.cdpf.org.cn/" class="ai-item">
+                    <div class="ai-name">中国残疾人联合会</div>
+                    <div class="ai-desc">残疾证</div>
+                    <span class="badge">不常用</span>
+                </a>
+                <a href="https://www.qcc.com/" class="ai-item">
+                    <div class="ai-name">企查查</div>
+                    <div class="ai-desc">商铺信息查询</div>
+                </a>
+                <a href="https://www.tianyancha.com/" class="ai-item">
+                    <div class="ai-name">天眼查</div>
+                    <div class="ai-desc">商铺信息查询</div>
+                </a>
+                 <a href="https://www.gsxt.gov.cn/index.html" class="ai-item">
+                    <div class="ai-name">国家企业信用信息公示系统</div>
+                    <div class="ai-desc">商铺信息查询</div>
+                </a>
+                <a href="https://eightdefine.shengshitong.com/#/login" class="ai-item">
+                    <div class="ai-name">12345网格管理平台</div>
+                    <div class="ai-desc">12345巡查投诉</div>
+                    <span class="badge">不常用</span>
+                </a>
+
+
+            </div>
+            <div class="empty-tip" style="margin-top: 1rem; background: transparent; text-align: left; font-size:0.7rem;">
+                💡 希望这座小小的“收藏馆”，能让你也找到属于自己的星光。
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        ✨希望这座小小的“收藏馆”，能让你也找到属于自己的星光。
+    </footer>
+</div>
+
+<script>
+    // 简单的“添加自定义网址”前端演示逻辑（本地添加，刷新会丢失）
+    const addBtn = document.getElementById('addCustomBtn');
+    const customArea = document.getElementById('customLinksArea');
+
+    addBtn.addEventListener('click', () => {
+        let siteName = prompt('请输入网址名称（例如：抖音AI工具）');
+        if (!siteName) return;
+        let siteUrl = prompt('请输入网址链接（必须以 http:// 或 https:// 开头）');
+        if (!siteUrl) return;
+        if (!siteUrl.startsWith('http')) {
+            alert('请填写完整的链接 (http:// 或 https://)');
+            return;
+        }
+        const newLink = document.createElement('a');
+        newLink.href = siteUrl;
+        newLink.target = '_blank';
+        newLink.className = 'tool-card';
+        newLink.textContent = siteName;
+        customArea.appendChild(newLink);
+    });
+</script>
 </body>
 </html>
